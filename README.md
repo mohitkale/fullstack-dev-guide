@@ -1,6 +1,22 @@
 # 🧠 MentorHub: Full Stack Learning Path
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
+[![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg)](./CODE_OF_CONDUCT.md)
+
 Welcome to **MentorHub** - your guided journey to becoming a full-stack developer! This project is designed to help you learn by building a real-world social media application called "WeAll".
+
+## 📺 Demo
+
+[Live Demo](#) (Coming soon)
+
+## 🌟 Features
+
+- **User Authentication**: Secure signup, login, and password reset
+- **Social Feed**: Create, like, and comment on posts
+- **User Profiles**: Customizable profiles with avatars
+- **Real-time Updates**: Live notifications and messaging
+- **Responsive Design**: Works on desktop and mobile devices
 
 ## 🌟 What You'll Learn
 
@@ -61,42 +77,104 @@ We'll build the WeAll app step by step through these modules:
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ ([Download](https://nodejs.org/))
-- Git ([Download](https://git-scm.com/))
-- Code Editor (We recommend [VS Code](https://code.visualstudio.com/))
+
+Make sure you have the following installed on your system:
+
+- [Node.js](https://nodejs.org/) (v18 or later)
+- [Git](https://git-scm.com/)
+- [npm](https://www.npmjs.com/) (comes with Node.js) or [Yarn](https://yarnpkg.com/)
+- [VS Code](https://code.visualstudio.com/) (recommended) or your preferred code editor
 
 ### Clone the Repository
+
+1. Clone the repository and navigate to the project directory:
+   ```bash
+   git clone https://github.com/yourusername/mentorhub.git
+   cd mentorhub
+   ```
+
+2. Install the project dependencies:
+   ```bash
+   # Install root dependencies
+   npm install
+   ```
+
+### Backend Setup
+
+Choose one of the following backends to work with:
+
+#### Option 1: PostgreSQL with Prisma
 ```bash
-git clone https://github.com/yourusername/mentorhub.git
-cd mentorhub
+cd backend-postgres
+npm install
+cp .env.example .env  # Update with your database credentials
+npx prisma migrate dev --name init
 ```
 
-### Install Dependencies
+#### Option 2: MongoDB with Mongoose
 ```bash
-# Install root dependencies
+cd backend-mongo
 npm install
-
-# Navigate to your chosen backend
-cd backend-postgres  # or backend-mongo or backend-supabase
-npm install
-
-# Navigate to frontend
-cd ../frontend
-npm install
+cp .env.example .env  # Update with your MongoDB URI
 ```
 
-### Start Development
+#### Option 3: Supabase
 ```bash
-# Start backend (from backend directory)
-npm run dev
-
-# Start frontend (from frontend directory)
-npm run dev
+cd backend-supabase
+npm install
+cp .env.example .env  # Update with your Supabase credentials
 ```
+
+### Frontend Setup
+
+```bash
+cd frontend
+npm install
+cp .env.example .env  # Update with your API endpoints
+```
+
+### Start Development Servers
+
+1. Start the backend (from the backend directory):
+   ```bash
+   npm run dev
+   ```
+
+2. In a new terminal, start the frontend:
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+
+3. Open [http://localhost:5173](http://localhost:5173) in your browser
+
+## 📚 Documentation
+
+- [Getting Started](./docs/getting-started/README.md)
+- [Frontend Development](./docs/frontend/README.md)
+- [Backend Development](./docs/backend/README.md)
+- [Mobile Development](./docs/mobile/README.md)
+- [API Reference](./docs/api/README.md) (Coming soon)
+- [Deployment Guide](./docs/deployment/README.md) (Coming soon)
 
 ## 🤝 Contributing
 
-We welcome contributions! Please read our [Contributing Guidelines](./CONTRIBUTING.md) to get started.
+We welcome contributions from everyone! Here's how you can help:
+
+1. **Report bugs**: File an issue describing the bug
+2. **Suggest features**: Propose new features or improvements
+3. **Contribute code**: Submit a pull request
+
+Please read our [Contributing Guidelines](./CONTRIBUTING.md) and [Code of Conduct](./CODE_OF_CONDUCT.md) before getting started.
+
+## 🛠 Built With
+
+- [React](https://reactjs.org/) - Frontend library
+- [TypeScript](https://www.typescriptlang.org/) - Type-safe JavaScript
+- [Express](https://expressjs.com/) - Backend framework
+- [PostgreSQL](https://www.postgresql.org/) / [MongoDB](https://www.mongodb.com/) / [Supabase](https://supabase.io/) - Database options
+- [React Native](https://reactnative.dev/) - Mobile app development
+- [Vite](https://vitejs.dev/) - Frontend build tool
 
 ## 📝 License
 
@@ -104,6 +182,19 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 
 ## 🙏 Acknowledgments
 
-- Inspired by real-world applications
-- Built with ❤️ for the developer community
-- Special thanks to all contributors
+- [React Documentation](https://reactjs.org/docs/getting-started.html)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+- [Express Documentation](https://expressjs.com/)
+- [Prisma Documentation](https://www.prisma.io/docs/)
+- [MongoDB Documentation](https://docs.mongodb.com/)
+- [Supabase Documentation](https://supabase.io/docs/)
+
+## 👥 Contributors
+
+<a href="https://github.com/yourusername/mentorhub/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=yourusername/mentorhub" />
+</a>
+
+## 📬 Contact
+
+Have questions or feedback? [Open an issue](https://github.com/yourusername/mentorhub/issues) or reach out to us at [your-email@example.com](mailto:your-email@example.com)
