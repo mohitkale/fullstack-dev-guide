@@ -1,54 +1,109 @@
-# React + TypeScript + Vite
+# 🧠 MentorHub: Full Stack Learning Path
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to **MentorHub** - your guided journey to becoming a full-stack developer! This project is designed to help you learn by building a real-world social media application called "WeAll".
 
-Currently, two official plugins are available:
+## 🌟 What You'll Learn
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend Development**: Build responsive web interfaces with React and TypeScript
+- **Backend Development**: Master different database technologies (PostgreSQL, MongoDB, Supabase)
+- **Mobile Development**: Create cross-platform mobile apps with React Native
+- **Authentication & Security**: Implement secure user authentication and authorization
+- **Real-time Features**: Build interactive features like posts, comments, and notifications
 
-## Expanding the ESLint configuration
+## 🛠 Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Frontend (Web)
+- React 18 with TypeScript
+- Vite for fast development
+- Custom CSS (No UI frameworks)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Mobile
+- React Native with Expo
+- TypeScript
+- Custom styling
+
+### Backend (Choose one)
+1. **Express + PostgreSQL** (with Prisma)
+2. **Express + MongoDB** (with Mongoose)
+3. **Supabase** (Backend as a Service)
+
+## 📚 Learning Path
+
+We'll build the WeAll app step by step through these modules:
+
+1. **Project Setup & Environment**
+   - [x] [Getting Started](./docs/getting-started/README.md)
+   - [ ] Development Environment Setup
+   - [ ] Version Control with Git
+
+2. **Frontend Development**
+   - [ ] React Fundamentals
+   - [ ] State Management
+   - [ ] API Integration
+   - [ ] Styling with CSS
+
+3. **Backend Development**
+   - [ ] Choose your backend stack
+   - [ ] Database Design
+   - [ ] API Development
+   - [ ] Authentication
+
+4. **Mobile Development**
+   - [ ] React Native Basics
+   - [ ] Navigation
+   - [ ] Device Features
+
+5. **Deployment**
+   - [ ] Web Deployment
+   - [ ] Mobile App Publishing
+   - [ ] CI/CD Pipeline
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+ ([Download](https://nodejs.org/))
+- Git ([Download](https://git-scm.com/))
+- Code Editor (We recommend [VS Code](https://code.visualstudio.com/))
+
+### Clone the Repository
+```bash
+git clone https://github.com/yourusername/mentorhub.git
+cd mentorhub
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Install Dependencies
+```bash
+# Install root dependencies
+npm install
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# Navigate to your chosen backend
+cd backend-postgres  # or backend-mongo or backend-supabase
+npm install
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+# Navigate to frontend
+cd ../frontend
+npm install
 ```
+
+### Start Development
+```bash
+# Start backend (from backend directory)
+npm run dev
+
+# Start frontend (from frontend directory)
+npm run dev
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Please read our [Contributing Guidelines](./CONTRIBUTING.md) to get started.
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Inspired by real-world applications
+- Built with ❤️ for the developer community
+- Special thanks to all contributors
