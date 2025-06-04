@@ -513,7 +513,292 @@ function App() {
 export default App;
 ```
 
-## Conclusion
+## 7. Parent-Child Communication
+
+In React, components can communicate in several ways. Let's explore the most common patterns.
+
+### 7.1 Passing Data from Parent to Child (Props)
+
+```tsx
+// Child Component
+interface WelcomeProps {
+  name: string;
+  age?: number; // Optional prop
+}
+
+function Welcome({ name, age = 18 }: WelcomeProps) {
+  return (
+    <div>
+      <h2>Hello, {name}!</h2>
+      {age && <p>You are {age} years old</p>}
+    </div>
+  );
+}
+
+// Parent Component
+function App() {
+  return (
+    <div>
+      <Welcome name="Alice" age={25} />
+      <Welcome name="Bob" />
+    </div>
+  );
+}
+```
+
+### 7.2 Passing Functions as Props (Child to Parent Communication)
+
+```tsx
+// Child Component
+interface ButtonProps {
+  onClick: () => void;
+  children: React.ReactNode;
+}
+
+function CustomButton({ onClick, children }: ButtonProps) {
+  return <button onClick={onClick}>{children}</button>;
+}
+
+// Parent Component
+function CounterApp() {
+  const [count, setCount] = useState(0);
+
+  const increment = () => setCount(c => c + 1);
+  const decrement = () => setCount(c => c - 1);
+  const reset = () => setCount(0);
+
+  return (
+    <div>
+      <h2>Count: {count}</h2>
+      <CustomButton onClick={increment}>Increment</CustomButton>
+      <CustomButton onClick={decrement}>Decrement</CustomButton>
+      <CustomButton onClick={reset}>Reset</CustomButton>
+    </div>
+  );
+}
+```
+
+### 7.3 Using Context for Deeply Nested Components
+
+```tsx
+// Context.js
+import { createContext, useContext, useState } from 'react';
+
+const ThemeContext = createContext({
+  theme: 'light',
+  toggleTheme: () => {}
+});
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [theme, setTheme] = useState('light');
+  
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <div data-theme={theme}>
+        {children}
+      </div>
+    </ThemeContext.Provider>
+  );
+}
+
+export const useTheme = () => useContext(ThemeContext);
+
+// ThemedButton.js
+import { useTheme } from './ThemeContext';
+
+function ThemedButton() {
+  const { theme, toggleTheme } = useTheme();
+  
+  return (
+    <button 
+      onClick={toggleTheme}
+      style={{
+        background: theme === 'light' ? '#333' : '#fff',
+        color: theme === 'light' ? '#fff' : '#333',
+        padding: '10px 20px',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer'
+      }}
+    >
+      Toggle {theme === 'light' ? 'Dark' : 'Light'} Mode
+    </button>
+  );
+}
+```
+
+## 8. Using useEffect Hook
+
+The `useEffect` hook lets you perform side effects in function components.
+
+### 8.1 Basic Usage
+
+```tsx
+import { useState, useEffect } from 'react';
+
+function Timer() {
+  const [seconds, setSeconds] = useState(0);
+
+  // Similar to componentDidMount and componentDidUpdate
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSeconds(s => s + 1);
+    }, 1000);
+
+    // Cleanup function (runs on component unmount)
+    return () => clearInterval(timer);
+  }, []); // Empty array means this effect runs once on mount
+
+  return <div>Seconds: {seconds}</div>;
+}
+```
+
+### 8.2 Fetching Data with useEffect
+
+```tsx
+import { useState, useEffect } from 'react';
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+function UserProfile({ userId }: { userId: number }) {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`https://api.example.com/users/${userId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch user');
+        }
+        const data = await response.json();
+        setUser(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [userId]); // Re-run when userId changes
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!user) return <div>No user found</div>;
+
+  return (
+    <div>
+      <h2>{user.name}</h2>
+      <p>Email: {user.email}</p>
+    </div>
+  );
+}
+```
+
+### 8.3 Debouncing User Input
+
+```tsx
+import { useState, useEffect } from 'react';
+
+function SearchBar({ onSearch }: { onSearch: (query: string) => void }) {
+  const [query, setQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+
+  // Update debounced query after user stops typing for 500ms
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 500);
+
+    // Cleanup function to clear the timeout
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [query]);
+
+  // Call onSearch when debouncedQuery changes
+  useEffect(() => {
+    if (debouncedQuery) {
+      onSearch(debouncedQuery);
+    }
+  }, [debouncedQuery, onSearch]);
+
+  return (
+    <input
+      type="text"
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+}
+```
+
+### 8.4 Tracking Window Size
+
+```tsx
+import { useState, useEffect } from 'react';
+
+function useWindowSize() {
+  const [windowSize, setWindowSize] = useState({
+    width: typeof window !== 'undefined' ? window.innerWidth : 0,
+    height: typeof window !== 'undefined' ? window.innerHeight : 0,
+  });
+
+  useEffect(() => {
+    // Only run on client-side
+    if (typeof window === 'undefined') return;
+
+
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+    
+    // Call handler right away so state gets updated with initial window size
+    handleResize();
+    
+    // Remove event listener on cleanup
+    return () => window.removeEventListener('resize', handleResize);
+  }, []); // Empty array ensures that effect is only run on mount and unmount
+
+  return windowSize;
+}
+
+function ResponsiveComponent() {
+  const { width } = useWindowSize();
+  const isMobile = width < 768;
+
+  return (
+    <div>
+      <p>Window width: {width}px</p>
+      {isMobile ? (
+        <p>Mobile view</p>
+      ) : (
+        <p>Desktop view</p>
+      )}
+    </div>
+  );
+}
+```
+
+## 9. Conclusion
 
 In this guide, we've covered:
 1. Basic event handling in React
@@ -522,5 +807,7 @@ In this guide, we've covered:
 4. Creating reusable components
 5. Passing data between parent and child components
 6. Building forms with multiple fields
+7. Advanced component communication patterns
+8. Using `useEffect` for side effects
 
 This foundation will help you understand how React handles user interactions and state management, which are essential skills for building interactive web applications.
